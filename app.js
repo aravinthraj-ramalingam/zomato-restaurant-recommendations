@@ -1,5 +1,7 @@
-const API_URL = '/api/recommend';
-const OPTIONS_API_URL = '/api/options';
+// Detect if running locally on port 8080 and point to port 8000 backend
+const BASE_URL = window.location.port === '8080' ? 'http://127.0.0.1:8000' : '';
+const API_URL = `${BASE_URL}/api/recommend`;
+const OPTIONS_API_URL = `${BASE_URL}/api/options`;
 
 document.addEventListener('DOMContentLoaded', async () => {
     const form = document.getElementById('recommendation-form');
