@@ -1,5 +1,5 @@
 import os
-from google import genai
+import google.generativeai as genai
 import json
 from dotenv import load_dotenv
 
@@ -13,7 +13,31 @@ def generate_recommendation_rationale(user_prefs: dict, candidates: list) -> str
     if not candidates:
         return "I'm sorry, but I couldn't find any restaurants that match those exact preferences. Try broadening your search or adjusting the price/rating constraints."
 
-    client = genai.Client(api_key=api_key)
+    # Configure the library
+    genai.configure(api_key=api_key)
+    
+    # Proactively find a model that supports generation
+    try:
+        models = list(genai.list_models())
+        gemini_models = [m.name for m in models if 'generateContent' in m.supported_generation_methods and 'gemini' in m.name]
+        
+        if not gemini_models:
+            print("CRITICAL: No Gemini models found with generateContent support for this key!")
+            # Try a blind guess if list fails
+            model_name = "gemini-1.5-flash"
+        else:
+            # Prefer 1.5-flash if available, otherwise just pick the first one
+            preferred = [m for m in gemini_models if 'gemini-1.5-flash' in m]
+            if preferred:
+                model_name = preferred[0]
+            else:
+                model_name = gemini_models[0]
+            
+        print(f"DEBUG: Using model -> {model_name}")
+        model = genai.GenerativeModel(model_name)
+    except Exception as e:
+        print(f"Error during model discovery: {e}")
+        model = genai.GenerativeModel('gemini-1.5-flash') # Ultimate fallback
     
     prompt = f"""
     You are an AI restaurant recommendation expert acting as a friendly digital concierge. 
@@ -29,11 +53,13 @@ def generate_recommendation_rationale(user_prefs: dict, candidates: list) -> str
     """
     
     try:
-        response = client.models.generate_content(
-            model='gemini-2.0-flash',
-            contents=prompt,
-        )
+        response = model.generate_content(prompt)
+        if not response or not response.text:
+            print("Gemini returned empty response")
+            return "I found some matches, but the AI chef's notes were empty this time."
         return response.text
     except Exception as e:
-        print(f"Gemini API Error: {e}")
+        import traceback
+        print(f"DEBUG - Model Name: {model_name}")
+        traceback.print_exc()
         return "I found some matches, but my AI generator encountered an issue creating the summary."

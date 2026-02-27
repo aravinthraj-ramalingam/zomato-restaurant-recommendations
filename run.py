@@ -10,14 +10,14 @@ def print_header(msg):
 
 def main():
     root_dir = os.path.dirname(os.path.abspath(__file__))
-    backend_dir = os.path.join(root_dir, 'Phase2_BackendAPI')
-    frontend_dir = os.path.join(root_dir, 'Phase3_FrontendUI')
+    backend_dir = os.path.join(root_dir, 'api')
+    frontend_dir = root_dir  # Frontend is now in the root
 
     # Check if DB exists
-    db_path = os.path.join(root_dir, 'Phase1_DataPipeline', 'zomato.db')
+    db_path = os.path.join(root_dir, 'api', 'zomato.db')
     if not os.path.exists(db_path):
-        print("⚠️ Warning: zomato.db not found. Please run Phase 1 data ingestion first.")
-        print("  cd Phase1_DataPipeline && python data_ingestion.py")
+        print("⚠️ Warning: zomato.db not found in api/ folder.")
+        print("  Please run the optimization script or restore the database.")
         sys.exit(1)
 
     # Copy .env if not exists
@@ -29,13 +29,14 @@ def main():
         print("⚠️ Notice: Created a .env file from .env.example. Please open .env and add your GEMINI_API_KEY.")
     
     # Start Backend API
-    print_header("Starting FastAPI Backend Server (Port 8000)")
+    print_header("Starting Vercel-Ready Backend (api/index.py on Port 8000)")
+    # We use -m uvicorn so it works regardless of shell
     backend_process = subprocess.Popen(
-        [sys.executable, "main.py"],
-        cwd=backend_dir
+        [sys.executable, "-m", "uvicorn", "api.index:app", "--host", "127.0.0.1", "--port", "8000"],
+        cwd=root_dir
     )
     
-    time.sleep(2) # Give backend a moment to start
+    time.sleep(3) # Give backend a moment to start
     
     # Start Frontend Server
     print_header("Starting Frontend UI Server (Port 8080)")
