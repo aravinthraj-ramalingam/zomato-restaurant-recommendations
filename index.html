@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zomato AI Recommendations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div class="background-animation"></div>
+
+    <div class="container">
+        <header class="hero">
+            <h1>Zomato <span class="gradient-text">AI</span> Chef</h1>
+            <p>Your intelligent culinary concierge. Tell us what you're craving, and we'll curate the perfect dining
+                experience.</p>
+        </header>
+
+        <div class="main-content">
+            <aside class="controls-panel glass-card">
+                <h2>Preferences</h2>
+                <form id="recommendation-form">
+
+                    <div class="input-group">
+                        <label for="place">Location</label>
+                        <select id="place" name="place" required>
+                            <option value="">Loading locations...</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="cuisine">Cuisine</label>
+                        <select id="cuisine" name="cuisine" required>
+                            <option value="">Loading cuisines...</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group split">
+                        <div>
+                            <label for="max_price">Max Cost</label>
+                            <select id="max_price" name="max_price">
+                                <option value="">Any</option>
+                                <option value="500">₹500 for two</option>
+                                <option value="1000">₹1000 for two</option>
+                                <option value="1500">₹1500 for two</option>
+                                <option value="2000">₹2000 for two</option>
+                                <option value="3000">₹3000 for two</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="min_rating">Min Rating</label>
+                            <select id="min_rating" name="min_rating">
+                                <option value="">Any</option>
+                                <option value="3.0">3.0+ ★</option>
+                                <option value="3.5">3.5+ ★</option>
+                                <option value="4.0">4.0+ ★</option>
+                                <option value="4.5">4.5+ ★</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="cta-btn">Generate Recommendations</button>
+                </form>
+            </aside>
+
+            <section class="results-panel">
+                <div id="loading-state" class="hidden glass-card">
+                    <div class="spinner"></div>
+                    <h3>Chef AI is analyzing menus...</h3>
+                    <p>Matching your taste profile with the best local spots.</p>
+                </div>
+
+                <div id="results-content" class="hidden">
+                    <div class="ai-rationale glass-card highlight-border" id="ai-rationale">
+                        <!-- AI text will be injected here -->
+                    </div>
+
+                    <h3>Top Matches</h3>
+                    <div class="cards-grid" id="restaurants-grid">
+                        <!-- Restaurant cards generated via JS -->
+                    </div>
+                </div>
+
+                <div id="empty-state" class="glass-card">
+                    <svg viewBox="0 0 24 24" width="48" height="48" stroke="currentColor" stroke-width="2" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <h3>Ready to explore?</h3>
+                    <p>Enter your preferences on the left to get started.</p>
+                </div>
+
+                <div id="error-state" class="hidden glass-card error-card">
+                    <h3>Oops!</h3>
+                    <p id="error-message">Something went wrong.</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

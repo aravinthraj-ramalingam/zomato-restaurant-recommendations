@@ -1,0 +1,12 @@
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+node_modules/
+Phase1_DataPipeline/zomato.db
+# Keep the optimized one in api/ if we want Vercel to have it, 
+# although usually we might want to store it elsewhere if it's too big.
+# But 31MB is fine for Vercel (limit is 50MB for free tier serverless if packaged, 
+# or we can just hope it fits in the repo).
+# Actually, Vercel file size limit for Git is 100MB per file, so 31MB is fine.

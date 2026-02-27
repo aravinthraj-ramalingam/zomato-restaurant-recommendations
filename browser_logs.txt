@@ -1,0 +1,3 @@
+{'level': 'SEVERE', 'message': 'http://localhost:8080/favicon.ico - Failed to load resource: the server responded with a status of 404 (File not found)', 'source': 'network', 'timestamp': 1772211605703}
+{'level': 'SEVERE', 'message': 'http://127.0.0.1:8000/api/recommend - Failed to load resource: net::ERR_CONNECTION_REFUSED', 'source': 'network', 'timestamp': 1772211609278}
+{'level': 'SEVERE', 'message': 'http://localhost:8080/app.js 92:20 "Error fetching recommendations:" TypeError: Failed to fetch\n    at HTMLFormElement.<anonymous> (http://localhost:8080/app.js:41:36)', 'source': 'console-api', 'timestamp': 1772211609278}
