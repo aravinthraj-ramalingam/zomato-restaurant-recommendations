@@ -96,7 +96,15 @@ body {
     }
 }
 
-/* Glassmorphism Cards */
+/* Responsive Sticky Controls - Only sticky on desktop */
+@media (min-width: 900px) {
+    .controls-panel {
+        position: sticky;
+        top: 2rem;
+        height: fit-content;
+    }
+}
+
 .glass-card {
     background: var(--card-bg);
     backdrop-filter: blur(16px);
@@ -118,12 +126,6 @@ body {
 }
 
 /* Forms */
-.controls-panel {
-    position: sticky;
-    top: 2rem;
-    height: fit-content;
-}
-
 .controls-panel h2 {
     margin-bottom: 1.5rem;
     font-size: 1.5rem;

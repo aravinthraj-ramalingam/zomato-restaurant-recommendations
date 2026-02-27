@@ -1,8 +1,13 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from .schemas import RecommendationRequest, RecommendationResponse, OptionsResponse
-from .db_service import get_candidates, get_options
-from .ai_service import generate_recommendation_rationale
+try:
+    from .schemas import RecommendationRequest, RecommendationResponse, OptionsResponse
+    from .db_service import get_candidates, get_options
+    from .ai_service import generate_recommendation_rationale
+except ImportError:
+    from api.schemas import RecommendationRequest, RecommendationResponse, OptionsResponse
+    from api.db_service import get_candidates, get_options
+    from api.ai_service import generate_recommendation_rationale
 import uvicorn
 from typing import Optional
 
