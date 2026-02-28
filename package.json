@@ -1,0 +1,10 @@
+{
+  "name": "zomato-restaurant-recommendations",
+  "version": "1.0.0",
+  "description": "Zomato AI Restaurant Recommendation Service",
+  "main": "run.py",
+  "scripts": {
+    "dev": "python run.py"
+  },
+  "dependencies": {}
+}
